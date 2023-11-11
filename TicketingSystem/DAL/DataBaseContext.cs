@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Net.Sockets;
 using TicketingSystem.DAL.Entities;
 
 namespace TicketingSystem.DAL
@@ -10,6 +11,12 @@ namespace TicketingSystem.DAL
 
         }
 
-        public DbSet<Tickets> Tickets { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Ticket>().HasIndex(t => t.TicketId).IsUnique();
+        }
+
+        public DbSet<Ticket> Tickets { get; set; }
     }
 }
